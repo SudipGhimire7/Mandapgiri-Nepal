@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
+import { CulturalToursModal } from './CulturalToursModal';
 
 export function CulturalExperience() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -66,12 +70,17 @@ export function CulturalExperience() {
                 </div>
               </div>
             </div>
-            <button className="mt-8 px-8 py-3 bg-[#C8102E] text-white rounded-full hover:bg-[#1B4D3E] transition-colors duration-300">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="mt-8 px-8 py-3 bg-[#C8102E] text-white rounded-full hover:bg-[#1B4D3E] transition-colors duration-300"
+            >
               Explore Cultural Tours
             </button>
           </motion.div>
         </div>
       </div>
+
+      <CulturalToursModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

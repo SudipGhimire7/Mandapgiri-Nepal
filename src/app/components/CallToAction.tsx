@@ -26,14 +26,15 @@ export function CallToAction() {
           <p className="text-xl mb-8 text-gray-100">
             Let us craft your perfect Nepali adventure. From mountain peaks to cultural treasures, your dream trip awaits.
           </p>
-          <motion.button
+          <motion.a
+            href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#1B4D3E] rounded-full hover:bg-[#D4AF37] hover:text-white transition-all duration-300 shadow-lg"
             style={{ fontFamily: 'var(--font-heading)', fontWeight: 600 }}
           >
             Contact Us <ArrowRight className="h-5 w-5" />
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>

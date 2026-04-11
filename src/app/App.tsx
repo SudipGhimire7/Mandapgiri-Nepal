@@ -5,9 +5,11 @@ import { FeaturedDestinations } from './components/FeaturedDestinations';
 import { PopularPackages } from './components/PopularPackages';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { CulturalExperience } from './components/CulturalExperience';
-import { Testimonials } from './components/Testimonials';
 import { CallToAction } from './components/CallToAction';
 import { Footer } from './components/Footer';
+import { AboutUs } from './components/AboutUs';
+import { Contact } from './components/Contact';
+import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 
 export default function App() {
   useEffect(() => {
@@ -61,22 +63,15 @@ export default function App() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-wrap gap-4"
             >
-              <motion.button
+              <motion.a
+                href="#packages"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-[#C8102E] text-white rounded-full hover:bg-[#D4AF37] transition-colors duration-300 shadow-lg"
+                className="px-8 py-4 bg-[#C8102E] text-white rounded-full hover:bg-[#D4AF37] transition-colors duration-300 shadow-lg inline-block"
                 style={{ fontFamily: 'var(--font-heading)', fontWeight: 600 }}
               >
                 Explore Packages
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border-2 border-white rounded-full hover:bg-white hover:text-[#1B4D3E] transition-all duration-300"
-                style={{ fontFamily: 'var(--font-heading)', fontWeight: 600 }}
-              >
-                Plan Your Trip
-              </motion.button>
+              </motion.a>
             </motion.div>
           </div>
         </div>
@@ -99,11 +94,13 @@ export default function App() {
 
       <FeaturedDestinations />
       <PopularPackages />
+      <AboutUs />
       <WhyChooseUs />
       <CulturalExperience />
-      <Testimonials />
       <CallToAction />
+      <Contact />
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }
