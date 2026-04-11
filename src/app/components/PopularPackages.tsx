@@ -1,12 +1,13 @@
 import { motion } from 'motion/react';
 import { Clock, DollarSign, Star } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { PackageModal } from './PackageModal';
 
 const packages = [
   {
     title: 'Everest Base Camp Trek',
     price: 1299,
-    duration: '14 days',
+    duration: '17 days',
     rating: 4.9,
     highlights: ['Professional Guide', 'Mountain Views', 'Local Culture'],
     image: 'https://images.unsplash.com/photo-1601062224947-3ca636754fb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudCUyMGV2ZXJlc3QlMjBoaW1hbGF5YXMlMjBuZXBhbCUyMG1vdW50YWluc3xlbnwxfHx8fDE3NzU4MjgyODN8MA&ixlib=rb-4.1.0&q=80&w=1080',
@@ -43,10 +44,35 @@ const packages = [
     highlights: ['Lake Boating', 'Paragliding', 'Peace Pagoda'],
     image: 'https://images.unsplash.com/photo-1671210528714-9eb963f279df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxwb2toYXJhJTIwbmVwYWwlMjBsYWtlfGVufDF8fHx8MTc3NTgyODI4NHww&ixlib=rb-4.1.0&q=80&w=1080',
   },
+  {
+    title: 'Upper Mustang Expedition',
+    price: 1599,
+    duration: '15 days',
+    rating: 4.8,
+    highlights: ['Forbidden Kingdom', 'Tibetan Culture', 'Desert Landscape'],
+    image: '/images/upper_mustang.png',
+  },
+  {
+    title: 'Lumbini Heritage Tour',
+    price: 349,
+    duration: '3 days',
+    rating: 4.7,
+    highlights: ['Birthplace of Buddha', 'Monastic Zones', 'Peace Pagoda'],
+    image: '/images/lumbini.png',
+  },
+  {
+    title: 'Langtang Valley Trek',
+    price: 799,
+    duration: '8 days',
+    rating: 4.9,
+    highlights: ['Glacial Valleys', 'Tamang Heritage', 'Mountain Panoramas'],
+    image: '/images/langtang.png',
+  },
 ];
 
 export function PopularPackages() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -125,8 +151,11 @@ export function PopularPackages() {
                       <DollarSign className="h-6 w-6" />
                       {pkg.price}
                     </div>
-                    <button className="px-4 py-2 bg-[#1B4D3E] text-white rounded-full hover:bg-[#C8102E] transition-colors duration-300">
-                      View Details
+                    <button
+                      onClick={() => setSelectedPackage(pkg.title)}
+                      className="px-4 py-2 bg-[#1B4D3E] text-white rounded-full hover:bg-[#C8102E] transition-colors duration-300"
+                    >
+                      Explore
                     </button>
                   </div>
                 </div>
@@ -154,6 +183,7 @@ export function PopularPackages() {
           </button>
         </div>
       </div>
+      <PackageModal isOpen={!!selectedPackage} packageName={selectedPackage} onClose={() => setSelectedPackage(null)} />
     </section>
   );
 }
