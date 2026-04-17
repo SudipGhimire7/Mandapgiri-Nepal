@@ -1,12 +1,12 @@
 import { motion } from 'motion/react';
-import { Clock, DollarSign, Star } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { PackageModal } from './PackageModal';
 
 const packages = [
   {
     title: 'Everest Base Camp Trek',
-    price: 1299,
+    price: 168000,
     duration: '17 days',
     rating: 4.9,
     highlights: ['Professional Guide', 'Mountain Views', 'Local Culture'],
@@ -14,7 +14,7 @@ const packages = [
   },
   {
     title: 'Kathmandu Valley Tour',
-    price: 399,
+    price: 51000,
     duration: '5 days',
     rating: 4.8,
     highlights: ['Temple Visits', 'Cultural Sites', 'Local Cuisine'],
@@ -22,7 +22,7 @@ const packages = [
   },
   {
     title: 'Annapurna Circuit',
-    price: 1099,
+    price: 142000,
     duration: '12 days',
     rating: 4.9,
     highlights: ['Mountain Pass', 'Diverse Landscapes', 'Tea Houses'],
@@ -30,7 +30,7 @@ const packages = [
   },
   {
     title: 'Chitwan Safari Adventure',
-    price: 599,
+    price: 77000,
     duration: '4 days',
     rating: 4.7,
     highlights: ['Wildlife Safari', 'Elephant Ride', 'Jungle Walk'],
@@ -38,7 +38,7 @@ const packages = [
   },
   {
     title: 'Pokhara Paradise',
-    price: 499,
+    price: 64000,
     duration: '6 days',
     rating: 4.8,
     highlights: ['Lake Boating', 'Paragliding', 'Peace Pagoda'],
@@ -46,7 +46,7 @@ const packages = [
   },
   {
     title: 'Upper Mustang Expedition',
-    price: 1599,
+    price: 207000,
     duration: '15 days',
     rating: 4.8,
     highlights: ['Forbidden Kingdom', 'Tibetan Culture', 'Desert Landscape'],
@@ -54,7 +54,7 @@ const packages = [
   },
   {
     title: 'Lumbini Heritage Tour',
-    price: 349,
+    price: 45000,
     duration: '3 days',
     rating: 4.7,
     highlights: ['Birthplace of Buddha', 'Monastic Zones', 'Peace Pagoda'],
@@ -62,7 +62,7 @@ const packages = [
   },
   {
     title: 'Langtang Valley Trek',
-    price: 799,
+    price: 103000,
     duration: '8 days',
     rating: 4.9,
     highlights: ['Glacial Valleys', 'Tamang Heritage', 'Mountain Panoramas'],
@@ -123,14 +123,10 @@ export function PopularPackages() {
                   />
                 </div>
                 <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center mb-3">
                     <span className="flex items-center gap-1 text-sm text-gray-600">
                       <Clock className="h-4 w-4" />
                       {pkg.duration}
-                    </span>
-                    <span className="flex items-center gap-1 text-sm text-[#D4AF37]">
-                      <Star className="h-4 w-4 fill-current" />
-                      {pkg.rating}
                     </span>
                   </div>
                   <h3 className="text-xl mb-3" style={{ fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
@@ -148,8 +144,8 @@ export function PopularPackages() {
                   </div>
                   <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                     <div className="flex items-center gap-1 text-2xl" style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: '#C8102E' }}>
-                      <DollarSign className="h-6 w-6" />
-                      {pkg.price}
+                      <span className="text-lg">NPR</span>
+                      {pkg.price.toLocaleString()}
                     </div>
                     <button
                       onClick={() => setSelectedPackage(pkg.title)}
