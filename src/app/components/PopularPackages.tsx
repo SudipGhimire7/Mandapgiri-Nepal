@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Clock } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { PackageModal } from './PackageModal';
+import { useCurrency } from '../context/CurrencyContext';
 
 const packages = [
   {
@@ -73,6 +74,7 @@ const packages = [
 export function PopularPackages() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
+  const { formatPrice } = useCurrency();
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -144,8 +146,7 @@ export function PopularPackages() {
                   </div>
                   <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                     <div className="flex items-center gap-1 text-2xl" style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: '#C8102E' }}>
-                      <span className="text-lg">NPR</span>
-                      {pkg.price.toLocaleString()}
+                      {formatPrice(pkg.price)}
                     </div>
                     <button
                       onClick={() => setSelectedPackage(pkg.title)}

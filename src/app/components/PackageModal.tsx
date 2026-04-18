@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Calendar, MapPin, Clock, Activity, Users, Cloud, Star } from 'lucide-react';
 import { allPackageDetails } from '../data/packageDetails';
+import { useState, useEffect } from 'react';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface PackageModalProps {
   isOpen: boolean;
@@ -10,7 +12,25 @@ interface PackageModalProps {
 
 export function PackageModal({ isOpen, packageName, onClose }: PackageModalProps) {
   const details = packageName ? allPackageDetails[packageName] : null;
+  const { formatPrice, convertPrice } = useCurrency();
+  const [travelers, setTravelers] = useState(1);
+  const [bookingDate, setBookingDate] = useState('');
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setTravelers(1);
+      setBookingDate('');
+      setBookingSuccess(false);
+    }
+  }, [isOpen]);
+
   if (!isOpen || !details) return null;
+
+  const handleBooking = (e: React.FormEvent) => {
+    e.preventDefault();
+    setBookingSuccess(true);
+  };
 
   return (
     <AnimatePresence>
@@ -204,9 +224,65 @@ export function PackageModal({ isOpen, packageName, onClose }: PackageModalProps
                     </div>
                   </div>
                   
-                  <button className="w-full mt-8 px-6 py-3 bg-[#1B4D3E] text-white rounded-xl hover:bg-[#C8102E] transition-colors duration-300 font-semibold shadow-lg hover:shadow-xl">
-                    Book This Trip
-                  </button>
+                  <div className="mt-8 pt-8 border-t border-gray-200">
+                    <h4 className="text-lg font-bold text-gray-900 mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
+                      Book Your Trip
+                    </h4>
+
+                    {bookingSuccess ? (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10 }} 
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-green-50 border border-green-200 rounded-xl p-4 text-center"
+                      >
+                        <p className="text-green-800 font-semibold mb-2">Booking Requested!</p>
+                        <p className="text-green-600 text-sm">
+                          Our team will contact you shortly to confirm your dates and process the payment.
+                        </p>
+                      </motion.div>
+                    ) : (
+                      <form onSubmit={handleBooking} className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Departure Date
+                          </label>
+                          <input 
+                            type="date" 
+                            required
+                            value={bookingDate}
+                            onChange={(e) => setBookingDate(e.target.value)}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C8102E] focus:border-transparent outline-none transition-all"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Number of Travelers
+                          </label>
+                          <input 
+                            type="number" 
+                            min="1" 
+                            max="20"
+                            required
+                            value={travelers}
+                            onChange={(e) => setTravelers(parseInt(e.target.value) || 1)}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C8102E] focus:border-transparent outline-none transition-all"
+                          />
+                        </div>
+                        <div className="flex justify-between items-center py-2">
+                          <span className="text-gray-600 font-medium">Total Price:</span>
+                          <span className="text-2xl font-bold text-[#C8102E]" style={{ fontFamily: 'var(--font-heading)' }}>
+                            {formatPrice(details.price * travelers)}
+                          </span>
+                        </div>
+                        <button 
+                          type="submit"
+                          className="w-full px-6 py-3 bg-[#1B4D3E] text-white rounded-xl hover:bg-[#C8102E] transition-colors duration-300 font-semibold shadow-lg hover:shadow-xl"
+                        >
+                          Confirm Booking
+                        </button>
+                      </form>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

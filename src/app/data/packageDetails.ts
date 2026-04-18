@@ -10,6 +10,7 @@ export interface TripOutlook {
 
 export interface PackageDetail {
   title: string;
+  price: number;
   duration: string;
   subtitle: string;
   description: string;
@@ -23,6 +24,7 @@ export interface PackageDetail {
 
 export const ebcDetails: PackageDetail = {
   title: "EVEREST BASE CAMP TREKKING",
+  price: 168000,
   duration: "17 Days",
   subtitle: "‘a scenic and cultural adventure with climb to high Kalapathar view top’",
   description: "Exciting views of high snow-capped peaks on daily scenic walks\nAdventure around Sagarmatha National Park, World Heritage Site.\nExplore lovely traditional Sherpa villages adorned with Buddhist culture\nWalk from green forest to remorseless fields of ice and glaciers at base camp\nStand beneath Mt. Everest at base camp, climb to high Kalapathar view top",
@@ -67,6 +69,7 @@ export const ebcDetails: PackageDetail = {
 
 export const kathmanduDetails: PackageDetail = {
   title: "KATHMANDU VALLEY TOUR",
+  price: 51000,
   duration: "5 Days",
   subtitle: "‘Discover the rich tapestry of history, art, and culture in the valley of gods’",
   description: "Explore the ancient kingdoms and UNESCO World Heritage Sites.\nExperience the living history in the bustling streets of Kathmandu.\nMarvel at the intricate wood carvings and pagoda-style temples.\nWitness the harmonious blend of Hinduism and Buddhism.\nEnjoy panoramic views from the Swayambhunath Stupa.",
@@ -99,6 +102,7 @@ export const kathmanduDetails: PackageDetail = {
 
 export const annapurnaDetails: PackageDetail = {
   title: "ANNAPURNA CIRCUIT",
+  price: 142000,
   duration: "12 Days",
   subtitle: "‘A legendary trek through diverse landscapes and over the majestic Thorong La Pass’",
   description: "Trek through a kaleidoscope of ecosystems, from lush jungles to alpine deserts.\nCross the thrilling Thorong La Pass at an elevation of 5,416 meters.\nExperience the warmth of Gurung and Manangi hospitality in remote villages.\nMarvel at the towering peaks of Annapurna and Dhaulagiri.\nRejuvenate in the natural hot springs of Tatopani.",
@@ -138,6 +142,7 @@ export const annapurnaDetails: PackageDetail = {
 
 export const chitwanDetails: PackageDetail = {
   title: "CHITWAN SAFARI ADVENTURE",
+  price: 77000,
   duration: "4 Days",
   subtitle: "‘Dive into the dense tropical jungles of Nepal in search of exotic wildlife’",
   description: "Experience the thrill of a jungle safari in the heart of Chitwan.\nSpot the endangered one-horned rhinoceros and the elusive Bengal tiger.\nNavigate the Rapti River on a traditional dug-out canoe.\nImmerse yourself in the vibrant culture of the indigenous Tharu people.\nEnjoy serene elephant rides and guided nature walks.",
@@ -169,6 +174,7 @@ export const chitwanDetails: PackageDetail = {
 
 export const pokharaDetails: PackageDetail = {
   title: "POKHARA PARADISE",
+  price: 64000,
   duration: "6 Days",
   subtitle: "‘Relax on the serene shores of Phewa Lake under the shadow of the Annapurnas’",
   description: "Unwind in the tranquil and picturesque city of Pokhara.\nEnjoy an early morning sunrise view over the Himalayas from Sarangkot.\nTake a peaceful boat ride on the expansive Phewa Lake.\nExplore mystical caves, waterfalls, and the iconic Peace Pagoda.\nExperience the thrill of paragliding alongside majestic mountains.",
@@ -202,6 +208,7 @@ export const pokharaDetails: PackageDetail = {
 
 export const mustangDetails: PackageDetail = {
   title: "UPPER MUSTANG EXPEDITION",
+  price: 207000,
   duration: "15 Days",
   subtitle: "‘Step into the Forbidden Kingdom and explore ancient caves and Tibetan culture’",
   description: "Trek through the rain-shadow of the Himalayas to Lo Manthang.\nDiscover nomadic cultures and ancient sky caves.\nExperience the stark beauty of the trans-Himalayan desert.\nHigh-altitude adventure with unique geological formations.",
@@ -249,6 +256,7 @@ export const mustangDetails: PackageDetail = {
 
 export const lumbiniDetails: PackageDetail = {
   title: "LUMBINI HERITAGE TOUR",
+  price: 45000,
   duration: "3 Days",
   subtitle: "‘A spiritual journey to the birthplace of Lord Buddha, the Light of Asia’",
   description: "Visit the Sacred Garden where Queen Mayadevi gave birth.\nExplore international monasteries representing Buddhist traditions.\nWitness the Ashoka Pillar and the Eternal Peace Flame.\nExperience a profound sense of serenity in this UNESCO World Heritage Site.",
@@ -284,6 +292,7 @@ export const lumbiniDetails: PackageDetail = {
 
 export const langtangDetails: PackageDetail = {
   title: "LANGTANG VALLEY TREK",
+  price: 103000,
   duration: "8 Days",
   subtitle: "‘Trek through glacial valleys and experience the resilient spirit of the Tamang people’",
   description: "Explore the nearest Himalayan valley from Kathmandu.\nHike through rhododendron and bamboo forests to alpine meadows.\nStand below the massive peaks of Langtang Lirung.\nVisit the ancient Kyanjin Gompa and sample local yak cheese.",
