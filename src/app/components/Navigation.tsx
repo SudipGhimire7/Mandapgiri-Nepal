@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Mountain } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useCurrency, Currency } from '../context/CurrencyContext';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { currency, setCurrency } = useCurrency();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,18 +48,41 @@ export function Navigation() {
                 {item}
               </a>
             ))}
+            
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value as Currency)}
+              className={`bg-transparent border ${isScrolled ? 'border-gray-300 text-gray-700' : 'border-white/50 text-white'} rounded-md px-2 py-1 outline-none focus:ring-2 focus:ring-[#C8102E] transition-colors`}
+            >
+              <option value="NPR" className="text-gray-900">NPR</option>
+              <option value="USD" className="text-gray-900">USD</option>
+              <option value="EUR" className="text-gray-900">EUR</option>
+              <option value="AUD" className="text-gray-900">AUD</option>
+            </select>
           </div>
 
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden"
-          >
-            {mobileMenuOpen ? (
-              <X className={isScrolled ? 'text-gray-900' : 'text-white'} />
-            ) : (
-              <Menu className={isScrolled ? 'text-gray-900' : 'text-white'} />
-            )}
-          </button>
+          <div className="md:hidden flex items-center gap-4">
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value as Currency)}
+              className={`bg-transparent border ${isScrolled ? 'border-gray-300 text-gray-700' : 'border-white/50 text-white'} rounded-md px-2 py-1 outline-none text-sm`}
+            >
+              <option value="NPR" className="text-gray-900">NPR</option>
+              <option value="USD" className="text-gray-900">USD</option>
+              <option value="EUR" className="text-gray-900">EUR</option>
+              <option value="AUD" className="text-gray-900">AUD</option>
+            </select>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden"
+            >
+              {mobileMenuOpen ? (
+                <X className={isScrolled ? 'text-gray-900' : 'text-white'} />
+              ) : (
+                <Menu className={isScrolled ? 'text-gray-900' : 'text-white'} />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
