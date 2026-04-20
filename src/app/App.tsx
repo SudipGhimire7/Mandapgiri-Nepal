@@ -10,6 +10,7 @@ import { Footer } from './components/Footer';
 import { AboutUs } from './components/AboutUs';
 import { Contact } from './components/Contact';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { WeatherWidget } from './components/WeatherWidget';
 
 export default function App() {
   useEffect(() => {
@@ -91,6 +92,8 @@ export default function App() {
           </div>
         </motion.div>
       </section>
+
+      <WeatherWidget />
 
       <FeaturedDestinations />
       <PopularPackages />
