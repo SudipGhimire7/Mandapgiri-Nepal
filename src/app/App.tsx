@@ -11,6 +11,10 @@ import { AboutUs } from './components/AboutUs';
 import { Contact } from './components/Contact';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { WeatherWidget } from './components/WeatherWidget';
+import { AuthProvider } from './context/AuthContext';
+import { WishlistProvider } from './context/WishlistContext';
+import { AuthModal } from './components/AuthModal';
+import { WishlistModal } from './components/WishlistModal';
 
 export default function App() {
   useEffect(() => {
@@ -21,8 +25,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation />
+    <AuthProvider>
+      <WishlistProvider>
+        <div className="min-h-screen bg-white">
+          <Navigation />
 
       <section id="home" className="relative h-screen w-full overflow-hidden">
         <div className="absolute inset-0">
@@ -104,6 +110,10 @@ export default function App() {
       <Contact />
       <Footer />
       <FloatingWhatsApp />
+      <AuthModal />
+      <WishlistModal />
     </div>
+      </WishlistProvider>
+    </AuthProvider>
   );
 }
