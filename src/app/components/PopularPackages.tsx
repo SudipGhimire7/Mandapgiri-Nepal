@@ -3,7 +3,8 @@ import { Clock } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { PackageModal } from './PackageModal';
 import { useCurrency } from '../context/CurrencyContext';
-
+import { useWishlist } from '../context/WishlistContext';
+import { Heart } from 'lucide-react';
 const packages = [
   {
     title: 'Everest Base Camp Trek',
@@ -75,6 +76,7 @@ export function PopularPackages() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   const { formatPrice } = useCurrency();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -117,12 +119,35 @@ export function PopularPackages() {
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
                 className="flex-shrink-0 w-80 snap-center bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
               >
-                <div className="h-48 overflow-hidden">
+                <div className="relative h-48 overflow-hidden">
                   <img
                     src={pkg.image}
                     alt={pkg.title}
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isInWishlist(pkg.title)) {
+                        removeFromWishlist(pkg.title);
+                      } else {
+                        addToWishlist({
+                          id: pkg.title,
+                          title: pkg.title,
+                          price: pkg.price,
+                          duration: pkg.duration,
+                          image: pkg.image,
+                        });
+                      }
+                    }}
+                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/70 backdrop-blur-sm hover:bg-white transition-colors shadow-sm"
+                  >
+                    <Heart
+                      className={`w-5 h-5 ${
+                        isInWishlist(pkg.title) ? 'fill-[#C8102E] text-[#C8102E]' : 'text-gray-700'
+                      }`}
+                    />
+                  </button>
                 </div>
                 <div className="p-6">
                   <div className="flex items-center mb-3">

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Heart } from 'lucide-react';
 import { DestinationModal } from './DestinationModal';
+import { useWishlist } from '../context/WishlistContext';
 
 const destinations = [
   {
@@ -28,6 +29,7 @@ const destinations = [
 
 export function FeaturedDestinations() {
   const [selectedDest, setSelectedDest] = useState<{name: string, image: string} | null>(null);
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   return (
     <section id="destinations" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -64,7 +66,30 @@ export function FeaturedDestinations() {
                   alt={destination.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (isInWishlist(destination.name)) {
+                      removeFromWishlist(destination.name);
+                    } else {
+                      addToWishlist({
+                        id: destination.name,
+                        title: destination.name + ' Tour',
+                        price: 50000,
+                        duration: '5 days',
+                        image: destination.image,
+                      });
+                    }
+                  }}
+                  className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/40 backdrop-blur-sm hover:bg-black/60 transition-colors shadow-sm"
+                >
+                  <Heart
+                    className={`w-5 h-5 ${
+                      isInWishlist(destination.name) ? 'fill-[#C8102E] text-[#C8102E]' : 'text-white'
+                    }`}
+                  />
+                </button>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                   <h3 className="text-2xl mb-2" style={{ fontFamily: 'var(--font-heading)', fontWeight: 700 }}>
                     {destination.name}
