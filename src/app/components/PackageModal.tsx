@@ -1,8 +1,11 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Calendar, MapPin, Clock, Activity, Users, Cloud, Star } from 'lucide-react';
+import { X, Calendar, MapPin, Clock, Activity, Users, Cloud, Star, Map, TrendingUp, Lock } from 'lucide-react';
 import { allPackageDetails } from '../data/packageDetails';
 import { useState, useEffect } from 'react';
 import { useCurrency } from '../context/CurrencyContext';
+import { useAuth } from '../context/AuthContext';
+import { MapComponent } from './MapComponent';
+import { ElevationProfile } from './ElevationProfile';
 
 interface PackageModalProps {
   isOpen: boolean;
@@ -12,7 +15,8 @@ interface PackageModalProps {
 
 export function PackageModal({ isOpen, packageName, onClose }: PackageModalProps) {
   const details = packageName ? allPackageDetails[packageName] : null;
-  const { formatPrice, convertPrice } = useCurrency();
+  const { formatPrice } = useCurrency();
+  const { user, setAuthModalOpen } = useAuth();
   const [travelers, setTravelers] = useState(1);
   const [bookingDate, setBookingDate] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
@@ -164,6 +168,35 @@ export function PackageModal({ isOpen, packageName, onClose }: PackageModalProps
                     ))}
                   </div>
                 </section>
+
+                {/* Route Map & Elevation Profile */}
+                {(details.mapData || details.elevationData) && (
+                  <section>
+                    <h3 className="text-2xl font-bold text-[#1B4D3E] mb-6" style={{ fontFamily: 'var(--font-heading)' }}>
+                      Route Map &amp; Elevation
+                    </h3>
+                    <div className="space-y-5">
+                      {details.mapData && (
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <Map className="w-5 h-5 text-[#C8102E]" />
+                            <h4 className="font-semibold text-gray-800">Interactive Trek Route</h4>
+                          </div>
+                          <MapComponent mapData={details.mapData} title={details.title} />
+                        </div>
+                      )}
+                      {details.elevationData && (
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <TrendingUp className="w-5 h-5 text-[#C8102E]" />
+                            <h4 className="font-semibold text-gray-800">Altitude Climb</h4>
+                          </div>
+                          <ElevationProfile data={details.elevationData} />
+                        </div>
+                      )}
+                    </div>
+                  </section>
+                )}
               </div>
 
               {/* Sidebar / Trip Outlook */}
@@ -229,25 +262,58 @@ export function PackageModal({ isOpen, packageName, onClose }: PackageModalProps
                       Book Your Trip
                     </h4>
 
-                    {bookingSuccess ? (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }} 
+                    {/* Auth gate — must be logged in */}
+                    {!user ? (
+                      <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="rounded-2xl border border-dashed border-[#C8102E]/40 bg-[#C8102E]/5 p-6 text-center space-y-4"
+                      >
+                        <div className="flex justify-center">
+                          <div className="w-12 h-12 rounded-full bg-[#C8102E]/10 flex items-center justify-center">
+                            <Lock className="w-6 h-6 text-[#C8102E]" />
+                          </div>
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-800 mb-1">Sign in to Book</p>
+                          <p className="text-sm text-gray-500">
+                            You need to be logged in to confirm a booking. It only takes a moment!
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => { onClose(); setAuthModalOpen(true); }}
+                          className="w-full px-6 py-3 bg-[#C8102E] text-white rounded-xl font-semibold hover:bg-[#a00d24] transition-colors duration-300 shadow-md hover:shadow-lg"
+                        >
+                          Sign In / Register
+                        </button>
+                      </motion.div>
+                    ) : bookingSuccess ? (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="bg-green-50 border border-green-200 rounded-xl p-4 text-center"
                       >
                         <p className="text-green-800 font-semibold mb-2">Booking Requested!</p>
                         <p className="text-green-600 text-sm">
-                          Our team will contact you shortly to confirm your dates and process the payment.
+                          Hi {user.name}, our team will contact you at {user.email} shortly to confirm your dates.
                         </p>
                       </motion.div>
                     ) : (
                       <form onSubmit={handleBooking} className="space-y-4">
+                        <div className="flex items-center gap-2 px-3 py-2 bg-green-50 border border-green-200 rounded-lg">
+                          <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0">
+                            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <p className="text-sm text-green-700 font-medium">Booking as <span className="font-bold">{user.name}</span></p>
+                        </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
                             Departure Date
                           </label>
-                          <input 
-                            type="date" 
+                          <input
+                            type="date"
                             required
                             value={bookingDate}
                             onChange={(e) => setBookingDate(e.target.value)}
@@ -258,9 +324,9 @@ export function PackageModal({ isOpen, packageName, onClose }: PackageModalProps
                           <label className="block text-sm font-medium text-gray-700 mb-1">
                             Number of Travelers
                           </label>
-                          <input 
-                            type="number" 
-                            min="1" 
+                          <input
+                            type="number"
+                            min="1"
                             max="20"
                             required
                             value={travelers}
@@ -271,10 +337,10 @@ export function PackageModal({ isOpen, packageName, onClose }: PackageModalProps
                         <div className="flex justify-between items-center py-2">
                           <span className="text-gray-600 font-medium">Total Price:</span>
                           <span className="text-2xl font-bold text-[#C8102E]" style={{ fontFamily: 'var(--font-heading)' }}>
-                            {formatPrice(details.price * travelers)}
+                            {formatPrice(details!.price * travelers)}
                           </span>
                         </div>
-                        <button 
+                        <button
                           type="submit"
                           className="w-full px-6 py-3 bg-[#1B4D3E] text-white rounded-xl hover:bg-[#C8102E] transition-colors duration-300 font-semibold shadow-lg hover:shadow-xl"
                         >

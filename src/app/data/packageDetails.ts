@@ -8,6 +8,25 @@ export interface TripOutlook {
   season: string;
 }
 
+export interface RouteMarker {
+  position: [number, number];
+  label: string;
+  altitude?: string;
+}
+
+export interface MapData {
+  center: [number, number];
+  zoom: number;
+  route: [number, number][];
+  markers: RouteMarker[];
+}
+
+export interface ElevationPoint {
+  distance: number; // km from start
+  altitude: number; // metres
+  label?: string;   // optional place name
+}
+
 export interface PackageDetail {
   title: string;
   price: number;
@@ -20,6 +39,8 @@ export interface PackageDetail {
   itinerary: { day: number; title: string }[];
   image: string;
   gallery?: string[];
+  mapData?: MapData;
+  elevationData?: ElevationPoint[];
 }
 
 export const ebcDetails: PackageDetail = {
@@ -64,7 +85,46 @@ export const ebcDetails: PackageDetail = {
     { day: 15, title: "Fly from Lukla to Kathmandu with afternoon free at leisure." },
     { day: 16, title: "Free day as contingency and for individual activities." },
     { day: 17, title: "International departure for homeward bound" }
-  ]
+  ],
+  mapData: {
+    center: [27.98, 86.92],
+    zoom: 11,
+    route: [
+      [27.6869, 86.7271],
+      [27.7353, 86.7131],
+      [27.8069, 86.7142],
+      [27.8361, 86.7631],
+      [27.8939, 86.8314],
+      [27.9414, 86.8119],
+      [27.9993, 86.8568],
+      [28.0006, 86.8625],
+      [27.9961, 86.8303],
+    ],
+    markers: [
+      { position: [27.6869, 86.7271], label: 'Lukla', altitude: '2,846m' },
+      { position: [27.8069, 86.7142], label: 'Namche Bazaar', altitude: '3,440m' },
+      { position: [27.8361, 86.7631], label: 'Tengboche', altitude: '3,867m' },
+      { position: [27.8939, 86.8314], label: 'Dingboche', altitude: '4,340m' },
+      { position: [27.9414, 86.8119], label: 'Lobuche', altitude: '4,960m' },
+      { position: [28.0006, 86.8625], label: 'EBC', altitude: '5,364m' },
+      { position: [27.9961, 86.8303], label: 'Kalapathar ▲', altitude: '5,545m' },
+    ],
+  },
+  elevationData: [
+    { distance: 0,   altitude: 1340, label: 'Kathmandu' },
+    { distance: 0.5, altitude: 2846, label: 'Lukla (fly)' },
+    { distance: 8,   altitude: 2645, label: 'Phakding' },
+    { distance: 21,  altitude: 3440, label: 'Namche Bazaar' },
+    { distance: 32,  altitude: 3867, label: 'Tengboche' },
+    { distance: 41,  altitude: 4340, label: 'Dingboche' },
+    { distance: 50,  altitude: 4960, label: 'Lobuche' },
+    { distance: 58,  altitude: 5180, label: 'Gorakshep' },
+    { distance: 65,  altitude: 5364, label: 'EBC' },
+    { distance: 67,  altitude: 5545, label: 'Kalapathar ▲' },
+    { distance: 78,  altitude: 3900, label: 'Pangboche' },
+    { distance: 94,  altitude: 3440, label: 'Namche Bazaar' },
+    { distance: 111, altitude: 2846, label: 'Lukla' },
+  ],
 };
 
 export const kathmanduDetails: PackageDetail = {
@@ -137,7 +197,47 @@ export const annapurnaDetails: PackageDetail = {
     { day: 10, title: "Trek from Tatopani to Ghorepani (2,860m)." },
     { day: 11, title: "Early hike to Poon Hill, then trek to Nayapul and drive to Pokhara." },
     { day: 12, title: "Fly or drive back to Kathmandu." }
-  ]
+  ],
+  mapData: {
+    center: [28.55, 84.0],
+    zoom: 9,
+    route: [
+      [28.2094, 84.3611],
+      [28.4197, 84.2258],
+      [28.5297, 84.1297],
+      [28.6656, 84.0178],
+      [28.7458, 83.9631],
+      [28.7706, 83.9281],
+      [28.7961, 83.8661],
+      [28.8194, 83.8708],
+      [28.7794, 83.7275],
+      [28.4972, 83.5578],
+      [28.4006, 83.6978],
+    ],
+    markers: [
+      { position: [28.2094, 84.3611], label: 'Besisahar', altitude: '760m' },
+      { position: [28.4197, 84.2258], label: 'Chame', altitude: '2,710m' },
+      { position: [28.6656, 84.0178], label: 'Manang', altitude: '3,540m' },
+      { position: [28.7961, 83.8661], label: 'Thorong La ▲', altitude: '5,416m' },
+      { position: [28.8194, 83.8708], label: 'Muktinath', altitude: '3,800m' },
+      { position: [28.4972, 83.5578], label: 'Tatopani', altitude: '1,189m' },
+      { position: [28.4006, 83.6978], label: 'Poon Hill', altitude: '2,860m' },
+    ],
+  },
+  elevationData: [
+    { distance: 0,   altitude: 760,  label: 'Besisahar' },
+    { distance: 18,  altitude: 2710, label: 'Chame' },
+    { distance: 28,  altitude: 3200, label: 'Pisang' },
+    { distance: 38,  altitude: 3540, label: 'Manang' },
+    { distance: 48,  altitude: 4050, label: 'Yak Kharka' },
+    { distance: 54,  altitude: 4450, label: 'Thorong Phedi' },
+    { distance: 62,  altitude: 5416, label: 'Thorong La ▲' },
+    { distance: 67,  altitude: 3800, label: 'Muktinath' },
+    { distance: 78,  altitude: 2720, label: 'Jomsom' },
+    { distance: 105, altitude: 1189, label: 'Tatopani' },
+    { distance: 117, altitude: 2860, label: 'Ghorepani' },
+    { distance: 125, altitude: 1070, label: 'Nayapul' },
+  ],
 };
 
 export const chitwanDetails: PackageDetail = {
@@ -328,7 +428,35 @@ export const langtangDetails: PackageDetail = {
     { day: 6, title: "Trek back to Lama Hotel." },
     { day: 7, title: "Trek back to Syabrubesi." },
     { day: 8, title: "Drive back to Kathmandu." }
-  ]
+  ],
+  mapData: {
+    center: [28.21, 85.43],
+    zoom: 11,
+    route: [
+      [28.1578, 85.1011],
+      [28.1844, 85.3533],
+      [28.2108, 85.5172],
+      [28.2122, 85.5569],
+      [28.2194, 85.5650],
+    ],
+    markers: [
+      { position: [28.1578, 85.1011], label: 'Syabrubesi', altitude: '1,503m' },
+      { position: [28.1844, 85.3533], label: 'Lama Hotel', altitude: '2,470m' },
+      { position: [28.2108, 85.5172], label: 'Langtang Village', altitude: '3,430m' },
+      { position: [28.2122, 85.5569], label: 'Kyanjin Gompa', altitude: '3,870m' },
+      { position: [28.2194, 85.5650], label: 'Kyanjin Ri ▲', altitude: '4,773m' },
+    ],
+  },
+  elevationData: [
+    { distance: 0,  altitude: 1503, label: 'Syabrubesi' },
+    { distance: 11, altitude: 2470, label: 'Lama Hotel' },
+    { distance: 22, altitude: 3430, label: 'Langtang Village' },
+    { distance: 27, altitude: 3870, label: 'Kyanjin Gompa' },
+    { distance: 30, altitude: 4773, label: 'Kyanjin Ri ▲' },
+    { distance: 33, altitude: 3870, label: 'Kyanjin Gompa' },
+    { distance: 44, altitude: 2470, label: 'Lama Hotel' },
+    { distance: 55, altitude: 1503, label: 'Syabrubesi' },
+  ],
 };
 
 export const allPackageDetails: Record<string, PackageDetail> = {
